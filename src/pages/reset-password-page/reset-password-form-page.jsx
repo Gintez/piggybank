@@ -9,7 +9,7 @@ import Button from 'atoms/button';
 import Form from 'atoms/form';
 import Typography from 'atoms/typography';
 import { isEmail, required } from 'helpers/field-validations';
-import { resetPassword } from 'api/account/account-actions';
+import { resetPassword } from 'api/auth/auth-actions';
 import { RESET_PASSWORD_FORM } from './constants';
 
 export const ResetPasswordForm = ({ handleSubmit }) => (

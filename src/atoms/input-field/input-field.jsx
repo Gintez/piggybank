@@ -7,14 +7,16 @@ export const InputField = ({
   type,
   label,
   placeholder,
-  meta
+  meta,
+  as,
+  rows
 }) => {
   const { touched, error } = meta;
 
   return (
     <Form.Group>
       <Form.Label>{label}</Form.Label>
-      <Form.Control isInvalid={touched && error} {...input} type={type} placeholder={placeholder} />
+      <Form.Control isInvalid={touched && error} {...input} type={type} placeholder={placeholder} as={as} rows={rows} />
       <Form.Control.Feedback type='invalid'>
         {error}
       </Form.Control.Feedback>
@@ -23,11 +25,15 @@ export const InputField = ({
 
 InputField.propTyped = {
   input: PropTypes.shape({}).isRequired,
-  type: PropTypes.string
+  type: PropTypes.string,
+  rows: PropTypes.number,
+  as: PropTypes.oneOf(['textarea'])
 };
 
 InputField.defaultProps = {
-  type: 'text'
+  type: 'text',
+  rows: null,
+  as: 'input'
 };
 
 export default InputField;

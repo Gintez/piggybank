@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router';
+import { Grid } from 'react-flexbox-grid';
 
 import LoginPage from 'pages/login-page';
 import SignUpPage from 'pages/sign-up-page';
@@ -13,16 +14,22 @@ import EmailVerificationPage from 'pages/email-verification-page';
 import DashboardPage from 'pages/dashboard-page';
 import ProtectedRoute from 'components/protected-route';
 import { setupErrorInterceptor } from 'api/notifications/notifications-actions';
+import Header from 'components/header';
+import Notifications from 'components/notifications';
 import api from 'api/api';
+import CreateAccountPage from 'pages/create-account-page';
 import { configureStore } from './store';
 import theme from './theme';
 
-const AppContent = styled.div`
+const AppStyled = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
+  flex-direction: column;
+  min-height: 100vh;
+`;
+
+const AppContent = styled.div`
+  flex: 1;
+  display: flex;
 `;
 
 const history = createBrowserHistory();
@@ -35,18 +42,23 @@ class App extends Component {
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           <ConnectedRouter history={history}>
-            <div>
+            <AppStyled>
+              <Header />
               <AppContent>
-                <Switch>
-                  <Route component={SignUpPage} path='/sign-up' />
-                  <Route component={ResetPasswordPage} path='/reset-password' />
-                  <Route component={ChangePasswordPage} path='/change-password/:hash' />
-                  <Route component={EmailVerificationPage} path='/email-verify' />
-                  <ProtectedRoute component={DashboardPage} path='/dashboard' exact />
-                  <Route component={LoginPage} path='/' />
-                </Switch>
+                <Grid>
+                  <Switch>
+                    <Route component={SignUpPage} path='/sign-up' />
+                    <Route component={ResetPasswordPage} path='/reset-password' />
+                    <Route component={ChangePasswordPage} path='/change-password/:hash' />
+                    <Route component={EmailVerificationPage} path='/email-verify' />
+                    <ProtectedRoute component={DashboardPage} path='/dashboard' exact />
+                    <ProtectedRoute component={CreateAccountPage} path='/create-account' exact />
+                    <Route component={LoginPage} path='/' />
+                  </Switch>
+                </Grid>
               </AppContent>
-            </div>
+              <Notifications />
+            </AppStyled>
           </ConnectedRouter>
         </Provider>
       </ThemeProvider>

@@ -43,7 +43,7 @@ export class ButtonComponent extends React.PureComponent {
         onClick={this.handleClick}
       >
         {Icon && <Icon />}
-        {loading ? 'Loading…' : text.toUpperCase()}
+        {loading ? 'Loading…' : text && text.toUpperCase()}
       </Button>);
   }
 }

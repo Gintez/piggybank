@@ -1,6 +1,8 @@
 import queryString from 'query-string';
+import uuid from 'uuid';
 
-import { removeToken, updateTokens } from './token-utils';
+import { addSuccessNotification } from '../notifications/notifications-actions';
+import { removeTokens, updateTokens } from './token-utils';
 
 export const signUp = data => async (dispatch, _, { api, history }) => {
   await api.post('/users', data);
@@ -31,9 +33,21 @@ export const login = ({ email, password }) => async (dispatch, _, { api, history
 
 export const logout = () => async (dispatch, _, { api, history }) => {
   await api.delete('/users/authentication');
-  removeToken();
+  removeTokens();
   history.push('/');
 };
 
 export const fieldValidation = ({ email, username }) => async (dispatch, _, { api, history }) =>
   api.post('/users/field/validation', { email, username }, { bypassErrorsInterceptor: true });
+
+export const changePassword = ({ data, id }) => async (dispatch, _, { api, history }) => {
+  const { data: tokens } = await api.put(`/password_resets/${id}`, data);
+  updateTokens(tokens.access_token, tokens.refresh_token);
+  history.push('/dashboard');
+  dispatch(addSuccessNotification({ text: 'Your password successfully updated', id: uuid() }));
+};
+
+export const resetPassword = (data) => async (dispatch, _, { api, history }) => {
+  await api.post('/password_resets', data);
+  history.push('/reset-password/success');
+};

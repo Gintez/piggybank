@@ -17,7 +17,7 @@ import {
   isMinLength,
   isPasswordsMatching
 } from 'helpers/field-validations';
-import { changePassword } from 'api/account/account-actions';
+import { changePassword } from 'api/auth/auth-actions';
 import { CHANGE_PASSWORD_FORM } from './constants';
 
 const isMaxLength50 = isMaxLength(50);

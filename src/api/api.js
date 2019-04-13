@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getAccessToken, getRefreshToken, updateTokens } from './auth/token-utils';
+import { getAccessToken, getRefreshToken, updateTokens, removeTokens } from './auth/token-utils';
 
 const BASE_URL = 'https://intense-taiga-45666.herokuapp.com/';
 
@@ -40,6 +40,10 @@ api.interceptors.response.use(
             Authorization: `Bearer ${response.data.access_token}`
           }
         });
+      }).catch(() => {
+        removeTokens();
+        window.location.replace('/login');
+        return Promise.reject(reject);
       });
     }
     throw reject;

@@ -5,7 +5,6 @@ import { getAccessToken } from 'api/auth/token-utils';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const isLoggedIn = !!getAccessToken();
-  console.log(isLoggedIn)
 
   return (
     <Route

@@ -14,7 +14,9 @@ export const addErrorNotification = data => addNotification({ ...data, type: ERR
 export const addSuccessNotification = data => addNotification({ ...data, type: SUCCESS_NOTIFICATION });
 export const setupErrorInterceptor = (api, dispatch) => {
   api.interceptors.response.use(
-    response => response,
+    response => {
+      return response;
+    },
     (error) => {
       if (error.response.config.bypassErrorsInterceptor) return Promise.reject(error);
       if (pathOr(false, ['response', 'data', 'error.response'])) {

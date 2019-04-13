@@ -47,7 +47,7 @@ const asyncValidate = async (values, dispatch, props, blurredField) => {
   }
 };
 
-export const SignUpForm = ({ handleSubmit, submitting, password }) => (
+export const SignUpForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Typography color='dark' h2 weight={500}>Sign up</Typography>
     <Field
@@ -117,7 +117,7 @@ export default compose(
     dispatch => ({
       onSubmit (data) {
         return dispatch(signUp(data));
-      },
+      }
     })
   ),
   reduxForm({
